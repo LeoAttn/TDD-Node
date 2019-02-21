@@ -1,0 +1,18 @@
+dist: trusty
+language: node_js
+node_js:
+- lts/*
+install:
+- npm install
+script:
+- npm run test
+deploy:
+  provider: heroku
+  api_key:
+    secure: OHahm2eonGywakMMZRCgn/MGoiONJHU4QLPynSqFJKmz1olICI0THgiM3exrSq1Zu34JwS0JWN5AENraBzXWtLyFT+U7P0secTZaUVrPugtcISHIjb3HeclLaZCerqypfZb60LTNas6Q9COOYhJ+GUzDCWm1ptI+HEIB6qE6lUAOjvVC2tenthJG53l/Q+YOjomsnv6Eagd1IqoAS5ybS8RsElCl14Gk5//Zvy/bzUDj7NJAGsCesPb3o3ekJMPxjVCVjB+wPs248o3870px/YaPsFTKm/5X7ZcK4FfzaFB+jRSZ4vVLhwzHDKsp3zo/PSBJ8lqwEmQZx6YMmd+adzsbfN2QOZKcmhbsEZ994FU6ltjWaRCYOk9okJ6UQZhlGrUv0mFUJCSaMbmA34cAZwDm+hfKKLZu2H7dHgQHF3ttvlJCSPZq7ayT2PaniQXxCGGgVyyC7xXLVLXPACr7gX7b5yC6NltqsrL+4sneEZs6HXBGFXi8NlWcDIJaPI8sA9+b4tq+tG6SLaDR8o6p4We+OhNdEAfmOaGh3SfxP24EFU9iYo/RsLQLqrV/9vnOwO5Da6X8SU9MqJ2vXFCccLc9mEyW4c7f8FdSydSC06jkbHiobEBk6A9cVXe0BIDBKFDdglLuyyOCmw5+w/s3xaDuRvcbYCjQqLQADPT+v8Y=
+  app:
+    devel : koekdevel
+    master: koekstaging
+    production: koekprod
+  run:
+    - "npm install"
