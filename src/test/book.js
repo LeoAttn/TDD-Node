@@ -5,8 +5,8 @@ import chaiAsPromised from 'chai-as-promised'
 import path from 'path'
 import nock from 'nock'
 
-import server from '../server'
-import resetDatabase from '../utils/resetDatabase'
+import server from '../main/server'
+import resetDatabase from '../main/utils/resetDatabase'
 
 chai.use(chaiHttp)
 chai.use(chaiNock)
