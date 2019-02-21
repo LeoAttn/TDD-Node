@@ -5,18 +5,18 @@ import uuid from 'uuid/v4'
 import initIfFileIfMissing from '../utils/initIfFileMissing'
 
 const getBooks = (req, res) => {
-  res.status(200).send({ message: 'route non activé' })
+  // res.status(200).send({ message: 'route non activé' })
 
-  // const pathBooks = path.join(__dirname, '../data/books.json');
-  // fs.readFile(pathBooks, 'utf8', (err, data) => {
-  //   if (err) {
-  //     console.log(err);
-  //     res.status(400).send({ message: 'error fetching books' });
-  //   } else {
-  //     console.log(data);
-  //     res.status(200).send(JSON.parse(data));
-  //   }
-  // });
+  const pathBooks = path.join(__dirname, '../data/books.json');
+  fs.readFile(pathBooks, 'utf8', (err, data) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send({ message: 'error fetching books' });
+    } else {
+      console.log(data);
+      res.status(200).send(JSON.parse(data));
+    }
+  });
 }
 
 /*
@@ -28,39 +28,39 @@ const initialStructure = {
 }
 
 const postBook = (req, res) => {
-  res.status(200).send({ message: 'route non activé' })
+  // res.status(200).send({ message: 'route non activé' })
 
-  // const pathBooks = path.join(__dirname, '../data/books.json');
-  // initIfFileIfMissing(pathBooks, initialStructure);
-  // fs.readFile(pathBooks, 'utf8', (err, data) => {
-  //   if (err) {
-  //     console.log(err);
-  //     res.status(400).send({ message: 'an Error occured' });
-  //   } else {
-  //     console.log(data);
-  //     let obj;
-  //     if (!data) {
-  //       obj = obj = { books: [] };
-  //     } else {
-  //       obj = JSON.parse(data); //now it an object
-  //     }
-  //     if (!obj || !obj.books) obj = { books: [] };
-  //     obj.books.push({
-  //       id: uuid(),
-  //       title: req.body.title,
-  //       years: req.body.years,
-  //       pages: req.body.pages
-  //     }); //add some data
-  //     const json = JSON.stringify(obj); //convert it back to json
-  //     fs.writeFile(pathBooks, json, 'utf8', (err, data) => {
-  //       if (err) {
-  //         res.status(400).send({ message: 'error adding the book' });
-  //       } else {
-  //         res.status(200).send({ message: 'book successfully added' });
-  //       }
-  //     });
-  //   }
-  // });
+  const pathBooks = path.join(__dirname, '../data/books.json');
+  initIfFileIfMissing(pathBooks, initialStructure);
+  fs.readFile(pathBooks, 'utf8', (err, data) => {
+    if (err) {
+      console.log(err);
+      res.status(400).send({ message: 'an Error occured' });
+    } else {
+      console.log(data);
+      let obj;
+      if (!data) {
+        obj = obj = { books: [] };
+      } else {
+        obj = JSON.parse(data); //now it an object
+      }
+      if (!obj || !obj.books) obj = { books: [] };
+      obj.books.push({
+        id: uuid(),
+        title: req.body.title,
+        years: req.body.years,
+        pages: req.body.pages
+      }); //add some data
+      const json = JSON.stringify(obj); //convert it back to json
+      fs.writeFile(pathBooks, json, 'utf8', (err, data) => {
+        if (err) {
+          res.status(400).send({ message: 'error adding the book' });
+        } else {
+          res.status(200).send({ message: 'book successfully added' });
+        }
+      });
+    }
+  });
 }
 
 /*
