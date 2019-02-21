@@ -5,6 +5,7 @@
   | | | |_| | |_| |_____| |\  | (_) | (_| |  __/
   |_| |____/|____/      |_| \_|\___/ \__,_|\___|
 ```
+[![build status](https://api.travis-ci.org/NokiDev/TDD-Node.svg?branch=master)](https://travis-ci.org/NokiDev/TDD-Node)
 
 
 ## Licence
