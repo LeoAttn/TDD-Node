@@ -1,11 +1,11 @@
-import fs from 'fs';
-import path from 'path';
-import uuid from 'uuid/v4';
+import fs from 'fs'
+import path from 'path'
+import uuid from 'uuid/v4'
 
-import initIfFileIfMissing from '../utils/initIfFileMissing';
+import initIfFileIfMissing from '../utils/initIfFileMissing'
 
 const getBooks = (req, res) => {
-  res.status(200).send({ message: 'route non activé' });
+  res.status(200).send({ message: 'route non activé' })
 
   // const pathBooks = path.join(__dirname, '../data/books.json');
   // fs.readFile(pathBooks, 'utf8', (err, data) => {
@@ -17,7 +17,7 @@ const getBooks = (req, res) => {
   //     res.status(200).send(JSON.parse(data));
   //   }
   // });
-};
+}
 
 /*
  * POST /book to save a new book.
@@ -25,10 +25,10 @@ const getBooks = (req, res) => {
 
 const initialStructure = {
   books: []
-};
+}
 
 const postBook = (req, res) => {
-  res.status(200).send({ message: 'route non activé' });
+  res.status(200).send({ message: 'route non activé' })
 
   // const pathBooks = path.join(__dirname, '../data/books.json');
   // initIfFileIfMissing(pathBooks, initialStructure);
@@ -61,13 +61,13 @@ const postBook = (req, res) => {
   //     });
   //   }
   // });
-};
+}
 
 /*
  * GET /book/:id route to retrieve a book given its id.
  */
 const getBook = (req, res) => {
-  res.status(200).send({ message: 'route non activé' });
+  res.status(200).send({ message: 'route non activé' })
 
   // const pathBooks = path.join(__dirname, '../data/books.json');
   // fs.readFile(pathBooks, 'utf8', (err, data) => {
@@ -87,13 +87,13 @@ const getBook = (req, res) => {
   //     res.status(200).send({ message: 'book fetched', book });
   //   }
   // });
-};
+}
 
 /*
  * DELETE /book/:id to delete a book given its id.
  */
 const deleteBook = (req, res) => {
-  res.status(200).send({ message: 'route non activé' });
+  res.status(200).send({ message: 'route non activé' })
 
   // const pathBooks = path.join(__dirname, '../data/books.json');
   // fs.readFile(pathBooks, 'utf8', (err, data) => {
@@ -122,13 +122,13 @@ const deleteBook = (req, res) => {
   //     });
   //   }
   // });
-};
+}
 
 /*
  * PUT /book/:id to updatea a book given its id
  */
 const updateBook = (req, res) => {
-  res.status(200).send({ message: 'route non activé' });
+  res.status(200).send({ message: 'route non activé' })
 
   // const pathBooks = path.join(__dirname, '../data/books.json');
   // fs.readFile(pathBooks, 'utf8', (err, data) => {
@@ -162,7 +162,7 @@ const updateBook = (req, res) => {
   //     });
   //   }
   // });
-};
+}
 
 //export all the functions
-export default { getBooks, postBook, getBook, deleteBook, updateBook };
+export default { getBooks, postBook, getBook, deleteBook, updateBook }

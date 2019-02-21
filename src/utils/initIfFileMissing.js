@@ -1,16 +1,16 @@
-import fs from 'fs';
+import fs from 'fs'
 
 const initIfFileIfMissing = (path, initialStructure) => {
   if (!fs.existsSync(path)) {
-    const json = JSON.stringify(initialStructure);
+    const json = JSON.stringify(initialStructure)
     fs.writeFile(path, json, 'utf8', (err, data) => {
       if (err) {
-        return;
+        return
       } else {
-        return;
+        return
       }
-    });
+    })
   }
-};
+}
 
-export default initIfFileIfMissing;
+export default initIfFileIfMissing
