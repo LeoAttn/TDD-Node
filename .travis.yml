@@ -8,14 +8,16 @@ install:
 addons:
   sonarcloud: 
   organization: nokidev-github
+  token:
+    secure: zWIYmGHhebezwtsTZ7ZLkp8B3l50Ha+byJyX9NZEDGNckmyNFvbRqk9ITMLvfUkt9aHGFWwbwGXz3ihduRZBbMNF3R1tWSxnJ+KuOrRyIcehdn0Jd24U8i++j1nHUJDH41CskvUdxfXiVyiIVRNoow7iXPtR6xqLANFAHK9pZEecIOesv110rGW649ULabRqRwGIP9W05ZaE+07uoYcZCM+Qcb1O6hobbajqSjO4gPVawBJiOf47VnVZ5UOB+sA8bEl6RREW7cPPkYnMDbgEAfpN2kpwIvNRyZZ5hV7yCwUo+XlcRM7W6EQUJbZFdSUVCHuT9/iLkJ/sEiSYGE70TUDNbfBjhxX17aA9geZJmTqkohVka5jJ3exbPLzbSnq3c+ipT5AWeCQ9UJ4nQKkrx70Qj3zhNa80EOX3pTe5EnJJrK5Pt2l7T3jbiWyl3hDuLIAQovwkwSf/xgF3aLhZxeZ1vKNRFtQo7+uJMFui0XGiBbRp4Q7+17caYTQ/FKkeew/QKHhGTaE44gHq8CnXMlBYN1JUp/yNIL/UEZt0ybXsiv1/UApyT81flpx2zKUCiMLlgGlULIElD5wNeSQhOYunWPgn/RFuFBSHU3NLsPd3122GejrFgG6m39YZQOWR3huwEggZOUgr1PDT3zTLjib7RAySFD68cO+Nbgv0wSI=
 jdk:
-  - oraclejdk8
+- oraclejdk8
 script:
 - sonar-scanner
 - npm run test
 cache:
   directories:
-    - '$HOME/.sonar/cache'
+  - "$HOME/.sonar/cache"
 deploy:
   provider: heroku
   api_key:
