@@ -6,7 +6,7 @@
   |_| |____/|____/      |_| \_|\___/ \__,_|\___|
 ```
 [![build status](https://api.travis-ci.org/NokiDev/TDD-Node.svg?branch=master)](https://travis-ci.org/NokiDev/TDD-Node)
-
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=NokiDev_TDD-Node&metric=coverage)](https://sonarcloud.io/dashboard?id=NokiDev_TDD-Node)
 
 ## Licence
 
