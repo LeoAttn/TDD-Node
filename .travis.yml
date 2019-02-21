@@ -26,6 +26,3 @@ deploy:
     devel: koekdevel
     master: koekstaging
     production: koekprod
-  run:
-  - npm install -g nodemon
-  - npm install
