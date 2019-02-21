@@ -30,7 +30,7 @@
     "eslint": "^4.19.1"
   },
   "scripts": {
-    "start": "NODE_ENV=dev && nodemon --exec babel-node src/server.js",
+    "start": "NODE_ENV=dev && nodemon --exec babel-node src/main/server.js",
     "test": "mocha ./src/test --timeout 10000  --compilers js:@babel/register"
   }
 }
