@@ -31,6 +31,7 @@
   },
   "scripts": {
     "start": "NODE_ENV=dev && nodemon --exec babel-node src/main/server.js",
-    "test": "mocha ./src/test --timeout 10000  --compilers js:@babel/register"
+    "test": "mocha ./src/test --timeout 10000  --compilers js:@babel/register",
+    "deploy": "node src/main/server.js"
   }
 }
