@@ -13,14 +13,45 @@ chai.use(chaiNock)
 chai.use(chaiAsPromised)
 
 // tout les packages et fonction nescessaire au test sont importé ici, bon courage
+const pathBooks = path.join(__dirname, '../main/data/books.json')
+
+const emptyBooks = {
+  books: []
+}
+const bookId = '0db0b43e-dddb-47ad-9b4a-e5fe9ec7c2a9'
+const BooksWithBook = {
+  books: [{
+    id: bookId,
+    title: 'Coco raconte Channel 2',
+    years: 1990,
+    pages: 400
+  }]
+}
+const book = {
+  title: 'Coco raconte Channel 42',
+  years: 1990,
+  pages: 400
+}
+const bookUpdate = {
+  title: 'Coco raconte Channel 42 Updated',
+  years: 1990,
+  pages: 400
+}
+console.log(bookUpdate)
+
+const successfullyAdded = 'book successfully added'
+const successfullyUpdated = 'book successfully updated'
+const successfullyDeleted = 'book successfully deleted'
+const errorFetching = 'error fetching books'
+const errorAdding = 'error adding the book'
+const errorUpdating = 'error updating the book'
+const errorDeleting = 'error deleting the book'
+
 
 // fait les Tests d'integration en premier
 describe('Test intégration (Empty database)', () => {
-  const emptyBooks = {
-    books: []
-  }
   beforeEach(() => {
-    resetDatabase(path.join(__dirname, '../main/data/books.json'), emptyBooks)
+    resetDatabase(pathBooks, emptyBooks)
   })
 
   it('should return empty database', done => {
@@ -42,16 +73,12 @@ describe('Test intégration (Empty database)', () => {
       .request(server)
       .post('/book')
       .set('content-type', 'application/x-www-form-urlencoded')
-      .send({
-        title: 'Coco raconte Channel 2',
-        years: 1990,
-        pages: 400
-      })
+      .send(book)
       .end((err, res) => {
         if (err) console.log(err)
         expect(res).to.have.status(200)
         expect(res.body).to.be.a('object')
-        expect(res.body.message).to.equal('book successfully added')
+        expect(res.body.message).to.equal(successfullyAdded)
         done()
       })
   })
@@ -59,35 +86,21 @@ describe('Test intégration (Empty database)', () => {
 })
 
 describe('Test intégration (Mocked database)', () => {
-  const oneBooks = {
-    books: [
-      {
-        id: '0db0b43e-dddb-47ad-9b4a-e5fe9ec7c2a9',
-        title: 'Coco raconte Channel 2',
-        years: 1990,
-        pages: 400
-      }
-    ]
-  }
   beforeEach(() => {
-    resetDatabase(path.join(__dirname, '../main/data/books.json'), oneBooks)
+    resetDatabase(pathBooks, BooksWithBook)
   })
 
   it('should update a book', done => {
     chai
       .request(server)
-      .put('/book/0db0b43e-dddb-47ad-9b4a-e5fe9ec7c2a9')
+      .put(`/book/${bookId}`)
       .set('content-type', 'application/x-www-form-urlencoded')
-      .send({
-        title: 'Coco raconte Channel 42',
-        years: 1990,
-        pages: 480
-      })
+      .send(bookUpdate)
       .end((err, res) => {
         if (err) console.log(err)
         expect(res).to.have.status(200)
         expect(res.body).to.be.a('object')
-        expect(res.body.message).to.equal('book successfully updated')
+        expect(res.body.message).to.equal(successfullyUpdated)
         done()
       })
   })
@@ -95,12 +108,12 @@ describe('Test intégration (Mocked database)', () => {
   it('should delete a book', done => {
     chai
       .request(server)
-      .delete('/book/0db0b43e-dddb-47ad-9b4a-e5fe9ec7c2a9')
+      .delete(`/book/${bookId}`)
       .end((err, res) => {
         if (err) console.log(err)
         expect(res).to.have.status(200)
         expect(res.body).to.be.a('object')
-        expect(res.body.message).to.equal('book successfully deleted')
+        expect(res.body.message).to.equal(successfullyDeleted)
         done()
       })
   })
@@ -108,18 +121,18 @@ describe('Test intégration (Mocked database)', () => {
   it('should get a book', done => {
     chai
       .request(server)
-      .get('/book/0db0b43e-dddb-47ad-9b4a-e5fe9ec7c2a9')
+      .get(`/book/${bookId}`)
       .end((err, res) => {
         if (err) console.log(err)
         expect(res).to.have.status(200)
         expect(res.body.message).to.equal('book fetched')
         expect(res.body.book).to.be.a('object')
         expect(res.body.book.title).to.be.a('string')
-        expect(res.body.book.title).to.equal(oneBooks.books[0].title)
+        expect(res.body.book.title).to.equal(BooksWithBook.books[0].title)
         expect(res.body.book.years).to.be.a('number')
-        expect(res.body.book.years).to.equal(oneBooks.books[0].years)
+        expect(res.body.book.years).to.equal(BooksWithBook.books[0].years)
         expect(res.body.book.pages).to.be.a('number')
-        expect(res.body.book.pages).to.equal(oneBooks.books[0].pages)
+        expect(res.body.book.pages).to.equal(BooksWithBook.books[0].pages)
         done()
       })
   })
@@ -138,14 +151,7 @@ describe('Test unitaire (simulation de réponse ok)', () => {
   it('should get all books', done => {
     nock('http://localhost:8080')
       .get('/book')
-      .reply(200, {
-        books: [{
-          id: '0db0b43e-dddb-47ad-9b4a-e5fe9ec7c2a9',
-          title: 'Coco raconte Channel 33',
-          years: 1990,
-          pages: 400
-        }]
-      })
+      .reply(200, BooksWithBook)
 
     chai
       .request('http://localhost:8080')
@@ -164,7 +170,7 @@ describe('Test unitaire (simulation de réponse ok)', () => {
     nock('http://localhost:8080')
       .post('/book')
       .reply(200, {
-        message: 'book successfully added'
+        message: successfullyAdded
       })
 
     chai
@@ -175,47 +181,49 @@ describe('Test unitaire (simulation de réponse ok)', () => {
         console.log(res.body)
         expect(res).to.have.status(200)
         expect(res.body).to.be.a('object')
-        expect(res.body.message).to.equal('book successfully added')
+        expect(res.body.message).to.equal(successfullyAdded)
         done()
       })
   })
 
   it('should update a book', done => {
     nock('http://localhost:8080')
-      .put('/book')
+      .put(`/book/${bookId}`)
       .reply(200, {
-        message: 'book successfully updated'
+        message: successfullyUpdated
       })
 
     chai
       .request('http://localhost:8080')
-      .put('/book')
+      .put(`/book/${bookId}`)
+      .set('content-type', 'application/x-www-form-urlencoded')
+      .send(bookUpdate)
       .end((err, res) => {
         if (err) console.log(err)
         console.log(res.body)
         expect(res).to.have.status(200)
         expect(res.body).to.be.a('object')
-        expect(res.body.message).to.equal('book successfully updated')
+        expect(res.body.message).to.equal(successfullyUpdated)
         done()
       })
   })
 
   it('should delete a book', done => {
     nock('http://localhost:8080')
-      .delete('/book')
+      .delete(`/book/${bookId}`)
       .reply(200, {
-        message: 'book successfully deleted'
+        message: successfullyDeleted
       })
 
     chai
       .request('http://localhost:8080')
-      .delete('/book')
+      .delete(`/book/${bookId}`)
       .end((err, res) => {
         if (err) console.log(err)
         console.log(res.body)
         expect(res).to.have.status(200)
         expect(res.body).to.be.a('object')
-        expect(res.body.message).to.equal('book successfully deleted')
+        expect(res.body.message).to.equal(successfullyDeleted)
         done()
       })
   })
@@ -235,7 +243,7 @@ describe('Test unitaire (simulation de mauvaise réponse)', () => {
     nock('http://localhost:8080')
       .get('/book')
       .reply(400, {
-        message: 'error fetching books'
+        message: errorFetching
       })
 
     chai
@@ -246,7 +254,7 @@ describe('Test unitaire (simulation de mauvaise réponse)', () => {
         console.log(res.body)
         expect(res).to.have.status(400)
         expect(res.body).to.be.a('object')
-        expect(res.body.message).to.equal('error fetching books')
+        expect(res.body.message).to.equal(errorFetching)
         done()
       })
   })
@@ -255,7 +263,7 @@ describe('Test unitaire (simulation de mauvaise réponse)', () => {
     nock('http://localhost:8080')
       .post('/book')
       .reply(400, {
-        message: 'error adding the book'
+        message: errorAdding
       })
 
     chai
@@ -266,47 +274,47 @@ describe('Test unitaire (simulation de mauvaise réponse)', () => {
         console.log(res.body)
         expect(res).to.have.status(400)
         expect(res.body).to.be.a('object')
-        expect(res.body.message).to.equal('error adding the book')
+        expect(res.body.message).to.equal(errorAdding)
         done()
       })
   })
 
   it('should have an error to update a book', done => {
     nock('http://localhost:8080')
-      .put('/book')
+      .put(`/book/${bookId}`)
       .reply(400, {
-        message: 'error updating the book'
+        message: errorUpdating
       })
 
     chai
       .request('http://localhost:8080')
-      .put('/book')
+      .put(`/book/${bookId}`)
       .end((err, res) => {
         if (err) console.log(err)
         console.log(res.body)
         expect(res).to.have.status(400)
         expect(res.body).to.be.a('object')
-        expect(res.body.message).to.equal('error updating the book')
+        expect(res.body.message).to.equal(errorUpdating)
         done()
       })
   })
 
   it('should have an error to delete a book', done => {
     nock('http://localhost:8080')
-      .delete('/book')
+      .delete(`/book/${bookId}`)
       .reply(400, {
-        message: 'error deleting the book'
+        message: errorDeleting
       })
 
     chai
       .request('http://localhost:8080')
-      .delete('/book')
+      .delete(`/book/${bookId}`)
       .end((err, res) => {
         if (err) console.log(err)
         console.log(res.body)
         expect(res).to.have.status(400)
         expect(res.body).to.be.a('object')
-        expect(res.body.message).to.equal('error deleting the book')
+        expect(res.body.message).to.equal(errorDeleting)
         done()
       })
   })

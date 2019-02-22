@@ -8,10 +8,18 @@
 [![build status](https://api.travis-ci.org/NokiDev/TDD-Node.svg?branch=master)](https://travis-ci.org/NokiDev/TDD-Node)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=NokiDev_TDD-Node&metric=coverage)](https://sonarcloud.io/dashboard?id=NokiDev_TDD-Node)
 
+## Utilisation
+
+Pour lancer le serveur : `npm start`
+
+Pour lancer les tests : `npm test`
+
+Le service est accessible via [http://localhost:8080]
+
 ## Licence
 
 ```text
-Copyright (C) 2018 TestKœk
+Copyright (C) 2018 TDDKœk
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
