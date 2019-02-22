@@ -14,7 +14,7 @@ Pour lancer le serveur : `npm start`
 
 Pour lancer les tests : `npm test`
 
-Le service est accessible via [http://localhost:8080]
+Le service est accessible via http://localhost:8080
 
 ## Licence
 
