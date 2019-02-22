@@ -36,6 +36,6 @@
     "clean": "rm -rf build && mkdir build",
     "build-babel": "babel -d ./build ./src/main -s",
     "build": "npm run clean && npm run build-babel",
-    "serve": "node ./build/server.js"
+    "serve": "SERVE_PORT=80 node ./build/server.js"
   }
 }

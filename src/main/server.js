@@ -2,9 +2,10 @@ import express from 'express'
 import morgan from  'morgan'
 import bodyParser from 'body-parser'
 import book from './routes/books'
+import process from 'process'
 // import config from 'config';
 
-const port = 8080
+const port = process.env.SERVE_PORT ? process.env.SERVE_PORT : 8080
 const app = express()
 
 //don't show the log when it is test
