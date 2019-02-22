@@ -36,6 +36,6 @@
     "clean": "rm -rf build && mkdir build",
     "build-babel": "babel -d ./build ./src/main -s",
     "build": "npm run clean && npm run build-babel",
-    "deploy": "npm run build && node ./build/server.js"
+    "serve": "node ./build/server.js"
   }
 }
