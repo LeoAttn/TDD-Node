@@ -1,7 +1,6 @@
 import express from 'express'
-import morgan from 'morgan'
+import morgan from  'morgan'
 import bodyParser from 'body-parser'
-
 import book from './routes/books'
 // import config from 'config';
 
