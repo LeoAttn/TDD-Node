@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "A bookstore API",
   "main": "src/server.js",
-  "author": "hikkary",
-  "license": "ISC",
+  "author": "TDDKœk",
+  "license": "GNU GPL v3",
   "dependencies": {
     "body-parser": "^1.15.1",
     "chai-as-promised": "^7.1.1",

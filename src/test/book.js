@@ -13,12 +13,21 @@ chai.use(chaiNock)
 chai.use(chaiAsPromised)
 
 // tout les packages et fonction nescessaire au test sont importé ici, bon courage
+const emptyBooks = {
+  books: []
+}
+const oneBook = {
+  books: [{
+    id: '0db0b43e-dddb-47ad-9b4a-e5fe9ec7c2a9',
+    title: 'Coco raconte Channel 2',
+    years: 1990,
+    pages: 400
+  }]
+}
+
 
 // fait les Tests d'integration en premier
 describe('Test intégration (Empty database)', () => {
-  const emptyBooks = {
-    books: []
-  }
   beforeEach(() => {
     resetDatabase(path.join(__dirname, '../main/data/books.json'), emptyBooks)
   })
@@ -59,18 +68,8 @@ describe('Test intégration (Empty database)', () => {
 })
 
 describe('Test intégration (Mocked database)', () => {
-  const oneBooks = {
-    books: [
-      {
-        id: '0db0b43e-dddb-47ad-9b4a-e5fe9ec7c2a9',
-        title: 'Coco raconte Channel 2',
-        years: 1990,
-        pages: 400
-      }
-    ]
-  }
   beforeEach(() => {
-    resetDatabase(path.join(__dirname, '../main/data/books.json'), oneBooks)
+    resetDatabase(path.join(__dirname, '../main/data/books.json'), oneBook)
   })
 
   it('should update a book', done => {
@@ -115,11 +114,11 @@ describe('Test intégration (Mocked database)', () => {
         expect(res.body.message).to.equal('book fetched')
         expect(res.body.book).to.be.a('object')
         expect(res.body.book.title).to.be.a('string')
-        expect(res.body.book.title).to.equal(oneBooks.books[0].title)
+        expect(res.body.book.title).to.equal(oneBook.books[0].title)
         expect(res.body.book.years).to.be.a('number')
-        expect(res.body.book.years).to.equal(oneBooks.books[0].years)
+        expect(res.body.book.years).to.equal(oneBook.books[0].years)
         expect(res.body.book.pages).to.be.a('number')
-        expect(res.body.book.pages).to.equal(oneBooks.books[0].pages)
+        expect(res.body.book.pages).to.equal(oneBook.books[0].pages)
         done()
       })
   })
@@ -138,14 +137,7 @@ describe('Test unitaire (simulation de réponse ok)', () => {
   it('should get all books', done => {
     nock('http://localhost:8080')
       .get('/book')
-      .reply(200, {
-        books: [{
-          id: '0db0b43e-dddb-47ad-9b4a-e5fe9ec7c2a9',
-          title: 'Coco raconte Channel 33',
-          years: 1990,
-          pages: 400
-        }]
-      })
+      .reply(200, oneBook)
 
     chai
       .request('http://localhost:8080')
