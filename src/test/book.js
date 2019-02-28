@@ -15,11 +15,11 @@ chai.use(chaiAsPromised)
 // tout les packages et fonction nescessaire au test sont importé ici, bon courage
 const pathBooks = path.join(__dirname, '../main/data/books.json')
 
-const emptyBooks = {
+const emptyBookstore = {
   books: []
 }
 const bookId = '0db0b43e-dddb-47ad-9b4a-e5fe9ec7c2a9'
-const BooksWithBook = {
+const BookstoreWithBook = {
   books: [{
     id: bookId,
     title: 'Coco raconte Channel 2',
@@ -37,7 +37,6 @@ const bookUpdate = {
   years: 1990,
   pages: 400
 }
-console.log(bookUpdate)
 
 const successfullyAdded = 'book successfully added'
 const successfullyUpdated = 'book successfully updated'
@@ -51,7 +50,7 @@ const errorDeleting = 'error deleting the book'
 // fait les Tests d'integration en premier
 describe('Test intégration (Empty database)', () => {
   beforeEach(() => {
-    resetDatabase(pathBooks, emptyBooks)
+    resetDatabase(pathBooks, emptyBookstore)
   })
 
   it('should return empty database', done => {
@@ -87,7 +86,7 @@ describe('Test intégration (Empty database)', () => {
 
 describe('Test intégration (Mocked database)', () => {
   beforeEach(() => {
-    resetDatabase(pathBooks, BooksWithBook)
+    resetDatabase(pathBooks, BookstoreWithBook)
   })
 
   it('should update a book', done => {
@@ -128,11 +127,11 @@ describe('Test intégration (Mocked database)', () => {
         expect(res.body.message).to.equal('book fetched')
         expect(res.body.book).to.be.a('object')
         expect(res.body.book.title).to.be.a('string')
-        expect(res.body.book.title).to.equal(BooksWithBook.books[0].title)
+        expect(res.body.book.title).to.equal(BookstoreWithBook.books[0].title)
         expect(res.body.book.years).to.be.a('number')
-        expect(res.body.book.years).to.equal(BooksWithBook.books[0].years)
+        expect(res.body.book.years).to.equal(BookstoreWithBook.books[0].years)
         expect(res.body.book.pages).to.be.a('number')
-        expect(res.body.book.pages).to.equal(BooksWithBook.books[0].pages)
+        expect(res.body.book.pages).to.equal(BookstoreWithBook.books[0].pages)
         done()
       })
   })
@@ -151,7 +150,7 @@ describe('Test unitaire (simulation de réponse ok)', () => {
   it('should get all books', done => {
     nock('http://localhost:8080')
       .get('/book')
-      .reply(200, BooksWithBook)
+      .reply(200, BookstoreWithBook)
 
     chai
       .request('http://localhost:8080')
@@ -230,13 +229,8 @@ describe('Test unitaire (simulation de réponse ok)', () => {
 })
 
 describe('Test unitaire (simulation de mauvaise réponse)', () => {
-  // beforeEach(()=>{
-  //   nock.disableNetConnect();
-  //   nock.enableNetConnect(/^(127\.0\.0\.1|localhost)/);
-  // });
   afterEach(() => {
     nock.cleanAll()
-    // nock.restore()
   })
 
   it('should have an error to get all books', done => {
